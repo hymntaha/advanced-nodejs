@@ -15,7 +15,10 @@ module.exports = app => {
 
   app.get('/api/blogs', requireLogin, async (req, res) => {
     const blogs = await Blog.find({ _user: req.user.id });
+    const redis = require('redis');
+    const redisUrl = 'redis://127.0.0.1:6379';
 
+    const client= redis.createClient(redisUrl)
     res.send(blogs);
   });
 
